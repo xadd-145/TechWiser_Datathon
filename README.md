@@ -16,9 +16,9 @@ The competition framing went beyond pure forecasting accuracy. Since forecast er
 
 ## Team
 
-* **Aditi**
-* **Viral**
-* **Dhyey**
+* **Aditi Patil**
+* **Viral Sheth**
+* **Dhyey Kasundra**
 
 We had previously collaborated as consultants at **BIG (Business Intelligence Group)**, which helped us move quickly through data debugging, modeling iteration, and decision-making under time pressure.
 
