@@ -1,9 +1,3 @@
-Absolutely. Below is a **strong, recruiter-grade README** for your Datathon GitHub repo, tailored to the notebooks and folder structure you showed, and aligned with the actual workflow in your files.
-
-You can paste this directly into `README.md`.
-
----
-
 # Synchrony Contact Center Forecasting Challenge
 
 ### UIUC Statistics Datathon 2026
