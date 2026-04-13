@@ -1,0 +1,10 @@
+filename,dataset_type,portfolio,total_columns,columns_with_missing,max_missing_pct,avg_missing_pct
+A-Daily.csv,daily,A,5,1,3.28,0.6559999999999999
+B-Daily.csv,daily,B,5,1,3.97,0.794
+C-Daily.csv,daily,C,5,1,1.92,0.384
+D-Daily.csv,daily,D,5,1,4.38,0.876
+A_Interval.csv,interval,A,8,3,2.62,0.6025
+B_Interval.csv,interval,B,8,2,2.54,0.6325000000000001
+C_Interval.csv,interval,C,8,3,1.79,0.52125
+D_Interval.csv,interval,D,8,2,1.81,0.43625
+Daily_Staffing.csv,staffing,ALL,5,4,10.14,7.398000000000001

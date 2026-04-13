@@ -1,0 +1,89 @@
+{
+  "project": "Synchrony Datathon \u2014 Contact Center Forecasting",
+  "generated": "2026-03-28 19:06",
+  "train_cutoff": "2025-07-31",
+  "target_month": "August 2025",
+  "files_cleaned": 9,
+  "output_directory": "/home/sagemaker-user/Data_Cleaned/Phase3_Final",
+  "issues_found_and_fixed": [
+    {
+      "issue": "Date column format",
+      "detail": "Raw daily dates formatted as '01/01/24 Mon' \u2014 stripped weekday suffix, parsed with format %m/%d/%y",
+      "affected": "All 4 daily files"
+    },
+    {
+      "issue": "Call volume stored as string with commas",
+      "detail": "'2,147' \u2192 removed commas before numeric conversion",
+      "affected": "All 4 daily files"
+    },
+    {
+      "issue": "Service level and abandon rate stored as percentage strings",
+      "detail": "'98.55%' \u2192 stripped % sign, divided by 100 to get decimal [0,1]",
+      "affected": "All 4 daily files"
+    },
+    {
+      "issue": "Phase 2 standardization destroyed month and interval columns",
+      "detail": "numeric_columns_by_type incorrectly included 'month' and 'interval'. pd.to_numeric('April') \u2192 NaN, pd.to_numeric('00:30:00') \u2192 NaN. Fixed by reloading from raw files for interval reconstruction.",
+      "affected": "All 4 interval files"
+    },
+    {
+      "issue": "Excel merged cells in month column",
+      "detail": "Month value only present on first row of each block in Excel. CSV export left remaining rows blank. Fixed with ffill() before any parsing.",
+      "affected": "All 4 interval files"
+    },
+    {
+      "issue": "Interval column format HH:MM:SS not numeric",
+      "detail": "Parsed as hour*2 + minute//30 to create slot_index 0-47. Cross-join built on slot_index not on raw string.",
+      "affected": "All 4 interval files"
+    },
+    {
+      "issue": "Incomplete interval grids",
+      "detail": "Portfolio A had 86 of 91 days with fewer than 48 slots. Built complete 48-slot grid via cross-join, missing slots filled by imputation.",
+      "affected": "A_Interval (worst), B, D partially"
+    },
+    {
+      "issue": "Abandoned rate stored as percentage string",
+      "detail": "'0.37%' format \u2014 could not be parsed numerically. Recalculated directly from abandoned_calls / call_volume after imputation.",
+      "affected": "All 4 interval files"
+    },
+    {
+      "issue": "Overnight CCT extreme values",
+      "detail": "Slots with call_volume <= 2 and CCT > 1800s are small-sample artifacts. Replaced with slot-level overnight median.",
+      "affected": "All 4 interval files (overnight hours)"
+    },
+    {
+      "issue": "Staffing column names",
+      "detail": "Columns named 'unnamed_0','a','b','c','d' \u2014 renamed to 'date','staffing_a','staffing_b','staffing_c','staffing_d'",
+      "affected": "Daily_Staffing.csv"
+    },
+    {
+      "issue": "August 2025 leakage risk",
+      "detail": "August 2025 actuals present in daily data. Enforced hard train cutoff at 2025-07-31 using is_train_period flag. Imputation only applied to train rows.",
+      "affected": "All 4 daily files"
+    }
+  ],
+  "imputation_strategy": {
+    "daily": "Group-based median \u2014 Pass 1: (weekday + month) group median. Pass 2: weekday-only median. Pass 3: global median safety net. Train set only.",
+    "interval": "Group-based median \u2014 Pass 1: (slot_index, is_weekend) median. Pass 2: slot_index-only median. Pass 3: global median safety net.",
+    "staffing": "Forward fill then backward fill."
+  },
+  "final_row_counts": {
+    "daily_per_portfolio": 731,
+    "interval_per_portfolio": 4368,
+    "interval_unique_days": 91,
+    "interval_slots_per_day": 48,
+    "staffing": 365
+  },
+  "validation_result": {
+    "errors": 0,
+    "warnings": 0,
+    "status": "PASSED \u2014 data is clean and ready for modeling"
+  },
+  "decisions_made": [
+    "August 2025 daily actuals present in raw data \u2014 treated as strict holdout, never touched during training or imputation",
+    "Portfolio D missing Aug 27-31 in daily data \u2014 kept as NaN in holdout zone, model must extrapolate",
+    "Daytime CCT outliers flagged but NOT removed \u2014 asymmetric scoring means real peaks must be preserved",
+    "Overnight CCT extremes smoothed \u2014 confirmed as small-sample noise not real operational signal",
+    "Abandoned rate recalculated from source columns rather than imputed \u2014 enforces internal consistency"
+  ]
+}

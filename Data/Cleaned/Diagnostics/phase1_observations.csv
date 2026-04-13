@@ -1,0 +1,7 @@
+topic,observation
+Raw files loaded,All expected raw CSV files loaded into the notebook successfully.
+Daily files,Daily files have 731 rows each and should now be checked through date_summary_df for valid coverage and duplicate dates.
+Staffing file,Staffing file has 365 rows and should align to 2025 daily coverage.
+Interval completeness,Use incomplete_day_counts to identify which portfolios have the most incomplete interval days.
+Duplicate interval keys,"Use interval_key_check_df to verify whether any (month, day, interval) duplicates exist."
+Next step,"Phase 2 will clean daily and staffing files, then prepare leakage-safe datasets before interval reconstruction."

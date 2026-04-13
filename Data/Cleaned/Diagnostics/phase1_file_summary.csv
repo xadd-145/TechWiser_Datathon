@@ -1,0 +1,10 @@
+filename,dataset_type,portfolio,rows,columns,duplicate_rows,total_missing_cells,total_missing_pct
+A_Interval.csv,interval,A,4084,8,6,197,0.6
+A-Daily.csv,daily,A,731,5,0,24,0.66
+B_Interval.csv,interval,B,4293,8,6,217,0.63
+B-Daily.csv,daily,B,731,5,0,29,0.79
+C_Interval.csv,interval,C,4368,8,0,182,0.52
+C-Daily.csv,daily,C,731,5,0,14,0.38
+D_Interval.csv,interval,D,4358,8,0,152,0.44
+D-Daily.csv,daily,D,731,5,0,32,0.88
+Daily_Staffing.csv,staffing,ALL,365,5,0,135,7.4
